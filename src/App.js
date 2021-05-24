@@ -1,5 +1,6 @@
 import React from 'react'
+import { Category } from './components/Category'
 
-export const App = () => {
-  <h1>Bienvenido a Instapet</h1>
-}
+export const App = () => (
+  <Category />
+)
