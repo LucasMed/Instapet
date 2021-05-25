@@ -4,7 +4,7 @@ import { Svg } from './styles'
 export const Logo = (props) => (
   <Svg
   width={301.66}
-  height={153.24}
+  height={140.24}
   xmlns="http://www.w3.org/2000/svg"
   viewBox="99.17 -1.62 301.66 153.24"
   style={{
