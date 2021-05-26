@@ -1,12 +1,16 @@
 import React, { useRef, useEffect, useState, Fragment } from 'react'
 import { ImgWrapper, Img, Button, Article } from './styles'
-import { MdFavoriteBorder } from 'react-icons/md'
+import { MdFavoriteBorder, MdFavorite } from 'react-icons/md'
+import { useLocalStorage } from '../../hooks/useLocalStorage'
 
 const DEFAULT_IMAGE = "https://i.imgur.com/dJa0Hpl.jpg"
 
-export const PhotoCard = ({ id, likes = 0, src = DEFAULT_IMAGE }) => {
+export const PhotoCard = ({ key, id, likes = 0, src = DEFAULT_IMAGE }) => {
   const element = useRef(null);
   const [show, setShow] = useState(false)
+  const itemKey = `like-${id}`
+  const [liked, setLiked] = useLocalStorage(itemKey, false)
+
 
   useEffect(() => {
     Promise.resolve(
@@ -25,20 +29,23 @@ export const PhotoCard = ({ id, likes = 0, src = DEFAULT_IMAGE }) => {
     })
   }, [element])
 
+  const Icon = liked ? MdFavorite : MdFavoriteBorder;
+
   return (
     <Article ref={element}>
-      { show && <Fragment>
-        <a href={`/detail/${id}`}>
-          <ImgWrapper>
-            <Img src={src} />
-          </ImgWrapper>
-        </a>
+      { show && (
+        <Fragment>
+          <a href={`/detail/${id}`}>
+            <ImgWrapper>
+              <Img src={src} />
+            </ImgWrapper>
+          </a>
 
-        <Button>
-          <MdFavoriteBorder size='32px' /> {likes} likes!
-      </Button>
-      </Fragment>}
-
+          <Button onClick={() => setLiked(!liked)}>
+            <Icon size='32px' /> {likes} likes!
+          </Button>
+        </Fragment>
+      )}
     </Article>
   )
 }
