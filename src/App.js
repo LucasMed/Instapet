@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { ListOfCategories } from './components/ListOfCategories'
 import { GlobalStyles } from './styles/GlobalStyles'
 import { ListOfPhotoCards } from './container/ListOfPhotoCards'
 import { Logo } from './components/Logo'
+import { PhotoCardWithQuery } from './container/PhotoCardWithQuery'
 
 export const App = () => {
   const urlParams = new window.URLSearchParams(window.location.search)
@@ -13,8 +14,14 @@ export const App = () => {
 
       <GlobalStyles />
       <Logo />
-      <ListOfCategories />
-      <ListOfPhotoCards categoryId={2} />
+      {
+        detailId
+        ? <PhotoCardWithQuery id={detailId} />
+        :  <Fragment>
+            <ListOfCategories />
+            <ListOfPhotoCards categoryId={2} />
+        </Fragment>
+      }
     </div>
   )
 }
